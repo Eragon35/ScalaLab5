@@ -8,7 +8,7 @@
         </coordinates>
         <creation-date>20.08.1997</creation-date>
         <area>null</area>  <!-- can be null-->
-        <nymber-of-rooms>2</nymber-of-rooms>
+        <number-of-rooms>2</number-of-rooms>
         <furnish>null</furnish>  <!-- can be null-->
         <view>null</view>
         <transport>null</transport>  <!-- can be null-->
@@ -27,7 +27,7 @@
         </coordinates>
         <creation-date>26.10.2019</creation-date>
         <area>null</area>  <!-- can be null-->
-        <nymber-of-rooms>1</nymber-of-rooms>
+        <number-of-rooms>1</number-of-rooms>
         <furnish>null</furnish>  <!-- can be null-->
         <view>null</view>
         <transport>null</transport>  <!-- can be null-->
