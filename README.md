@@ -86,3 +86,4 @@ public enum Transport {
     ENOUGH;
 }
 ```
+To he honest enums & classes' fields are different. Because the task changed a bit during i had began lab and the time i wrote readme. But all other things are allright.
