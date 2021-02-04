@@ -6,9 +6,8 @@ import prog.Model.View.View
 
 import java.util.{Calendar, Date}
 
-class Flat(name: String, coordinates: Coordinates, area: Float, numberOfRooms : Int,
-           furnish: Furnish, view: View, transport: Transport, house: House){
-  val id: Int = IdGenerator.getId
+class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates, area: Float, numberOfRooms : Int, furnish: Furnish = Option[Furnish],
+           view: View = Option[View], transport: Transport = Option[Transport], house: House) {
   val creationDate: Date = Calendar.getInstance().getTime // Fri Jan 08 01:39:17 MSK 2021
   if (id <= 0) throw new IllegalArgumentException("id must be more than 0")
   if (name == null) throw new IllegalArgumentException("name can't be null")
@@ -36,9 +35,13 @@ class Flat(name: String, coordinates: Coordinates, area: Float, numberOfRooms : 
     ", " + house.toString
   }
 
+  /**
+   * method assistant
+   * to show only not null fields
+   */
   def checkingNulls(): String = {
     var result = ""
-    if (view != null) result += ", view:" + view
+    if (view != null) result += ", view: " + view
     if( transport != null) result += ", transport: " + transport
     result
   }
