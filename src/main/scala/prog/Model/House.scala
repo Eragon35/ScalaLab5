@@ -10,4 +10,8 @@ class House(name: String, year: Int, numberOfFloors: Int){
     "(year: " + year +
     ", number of floors: " + numberOfFloors + ")"
   }
+
+  def name(): String = name
+  def year() = year
+  def numberOfFloors() = numberOfFloors
 }

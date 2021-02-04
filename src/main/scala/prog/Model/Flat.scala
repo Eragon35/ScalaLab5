@@ -45,4 +45,26 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates, 
     if( transport != null) result += ", transport: " + transport
     result
   }
+
+  def toXml () = {
+    <flat>
+      <id>{ id }</id>
+      <name>{ name }</name>
+      <coordinates>
+        <x>{ coordinates.x }</x>
+        <y>{ coordinates.y }</y>
+      </coordinates>
+      <creation-date>{ creationDate }</creation-date>
+      <area>null</area>  <!-- can be null-->
+      <number-of-rooms>{ numberOfRooms }</number-of-rooms>
+      <furnish>null</furnish>  <!-- can be null-->
+      <view>{ view }</view>
+      <transport>null</transport>  <!-- can be null-->
+      <house>
+        <name>{ house.name }</name>
+        <year>{ house.year }</year>
+        <number-of-lifts>{ house.numberOfFloors }</number-of-lifts>
+      </house>
+    </flat>
+  }
 }

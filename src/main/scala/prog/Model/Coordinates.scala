@@ -9,4 +9,7 @@ class Coordinates (x: Long, y: Float) {
   override def toString: String = {
     "Coordinates (" + x + ", " + y + ")"
   }
+
+  def x() = x
+  def y() = y
 }
