@@ -12,6 +12,6 @@ class House(name: String, year: Int, numberOfFloors: Int){
   }
 
   def name(): String = name
-  def year() = year
-  def numberOfFloors() = numberOfFloors
+  def year(): Int = year
+  def numberOfFloors(): Int = numberOfFloors
 }
