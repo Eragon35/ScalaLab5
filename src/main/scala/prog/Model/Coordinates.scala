@@ -10,6 +10,6 @@ class Coordinates (x: Long, y: Float) {
     "Coordinates (" + x + ", " + y + ")"
   }
 
-  def x() = x
-  def y() = y
+  def x(): Long = x
+  def y(): Float = y
 }
