@@ -8,7 +8,7 @@ import java.util.{Calendar, Date}
 import scala.xml.{Elem, Node}
 
 class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates, creationDate: Date = Calendar.getInstance().getTime ,area: Float,
-           numberOfRooms : Int, furnish: Furnish = Option[Furnish], view: View = Option[View], transport: Transport = Option[Transport], house: House) {
+           numberOfRooms : Int, furnish: Furnish = null, view: View = null, transport: Transport = null, house: House) {
    //TODO: rework creationDate from "Fri Jan 08 01:39:17 MSK 2021" to "20.08.1997"
   if (id <= 0) throw new IllegalArgumentException("id must be more than 0")
   if (name == null) throw new IllegalArgumentException("name can't be null")
@@ -24,7 +24,7 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates, 
 //  TODO: finish toString
   override def toString: String = {
     s"Flat - id: $id, name: $name, $coordinates, creation date: $creationDate, area: $area, " +
-    s"number of rooms: $numberOfRooms, furnish: $furnish, $checkingNulls(), $house"
+    s"number of rooms: $numberOfRooms, furnish: $furnish, $checkingNulls, $house"
   }
 
   /**

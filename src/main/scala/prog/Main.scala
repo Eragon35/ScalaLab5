@@ -3,7 +3,7 @@ package prog
 import prog.Model.Flat
 
 import java.util.{Calendar, Date}
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable
 import scala.io.StdIn
 
 object Main extends App {
@@ -13,13 +13,14 @@ object Main extends App {
 
   val start: Date = Calendar.getInstance().getTime
   val filename = args(0)
-  val list = ArrayBuffer[Flat]()
+  val collection = mutable.ArrayDeque[Flat]()
 
   //    TODO: read data from file
   while (true) {
+    Thread.sleep(50)
     print("Type your command: ")
     val command: String = StdIn.readLine()
     //    TODO: finish handle for all available commands
-    Console.handler(command)
+    ConsoleHandler.handler(command)
   }
 }
