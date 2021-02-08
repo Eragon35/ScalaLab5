@@ -4,15 +4,15 @@ import prog.Model.Furnish.Furnish
 import prog.Model.Transport.Transport
 import prog.Model.View.View
 
+import java.time.LocalDate
 import java.util.{Calendar, Date}
 import scala.xml.{Elem, Node}
 
 // TODO: refactor area default value
 class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
-           creationDate: Date = Calendar.getInstance().getTime, area: Float = 0, numberOfRooms : Int,
+           creationDate: LocalDate = java.time.LocalDate.now, area: Float = 0, numberOfRooms : Int,
            furnish: Furnish = Furnish.NONE, view: View, transport: Transport = Transport.NONE, house: House)
 {
-   //TODO: rework creationDate from "Fri Jan 08 01:39:17 MSK 2021" to "20.08.1997"
   if (id <= 0) throw new IllegalArgumentException("id must be more than 0")
   if (name == null) throw new IllegalArgumentException("name can't be null")
   if (name.isEmpty) throw new IllegalArgumentException("name must be longer than 0")
@@ -72,7 +72,7 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
     val id = (node \ "id").text.toInt
     val name = (node \ "name").text
     val coordinates = new Coordinates((node \ "coordinates" \ "x").text.toLong, (node \ "coordinates" \ "y").text.toFloat)
-    val creationDate = new java.text.SimpleDateFormat("dd.MM.yyyy").parse((node \ "creation-date").text)
+    val creationDate = LocalDate.parse((node \ "creation-date").text)
     val area = (node \ "area").text.toFloat
     val numberOfRooms = (node \ "number-of-rooms").text.toInt
     val furnish = Furnish.withName((node \ "furnish").text)
