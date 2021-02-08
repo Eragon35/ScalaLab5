@@ -5,7 +5,6 @@ import prog.Model.Transport.Transport
 import prog.Model.View.View
 
 import java.time.LocalDate
-import java.util.{Calendar, Date}
 import scala.xml.{Elem, Node}
 
 // TODO: refactor area default value
@@ -26,8 +25,8 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
 
 //  TODO: finish toString
   override def toString: String = {
-    s"Flat - id: $id, name: $name, $coordinates, creation date: $creationDate, area: $area, " +
-    s"number of rooms: $numberOfRooms, furnish: $furnish, $checkingNulls, $house"
+    s"Flat {id: $id; name: $name; $coordinates; creation date: $creationDate; area: $area; " +
+    s"number of rooms: $numberOfRooms; furnish: $furnish; $checkingNulls; $house}"
   }
 
   /**
@@ -36,8 +35,8 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
    */
   def checkingNulls(): String = {
     var result = ""
-    if (view != null) result += ", view: " + view
-    if( transport != null) result += ", transport: " + transport
+    if (view != null) result += "view: " + view
+    if( transport != null) result += "; transport: " + transport
     result
   }
 

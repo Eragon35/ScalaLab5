@@ -5,11 +5,7 @@ class House(name: String, year: Int, numberOfFloors: Int){
   if (numberOfFloors <= 0) throw new IllegalArgumentException("numberOfFloors must be more than 0")
   if (numberOfFloors > 47) throw new IllegalArgumentException("numberOfFloors must be less than 48")
 
-  override def toString: String = {
-    "House " + name +
-    "(year: " + year +
-    ", number of floors: " + numberOfFloors + ")"
-  }
+  override def toString: String = s"House: $name (year: $year, number of floors: $numberOfFloors)"
 
   def name(): String = name
   def year(): Int = year
