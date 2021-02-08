@@ -25,9 +25,10 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
   if (house == null) throw new IllegalArgumentException("house can't be null")
 
 
+  def view_(): View = view
   override def toString: String = {
     s"\tFlat {id: $id; name: $name; $coordinates; creation date: $creationDate; area: $area; " +
-    s"number of rooms: $numberOfRooms; furnish: $furnish; view: $view; transport: $transport; $house}"
+    s"number of rooms: $numberOfRooms; \n\t\tfurnish: $furnish; view: $view; transport: $transport; $house; hashCode: $hashCode()}"
   }
 
   /**
