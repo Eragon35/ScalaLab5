@@ -25,7 +25,7 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
 
 //  TODO: finish toString
   override def toString: String = {
-    s"Flat {id: $id; name: $name; $coordinates; creation date: $creationDate; area: $area; " +
+    s"\tFlat {id: $id; name: $name; $coordinates; creation date: $creationDate; area: $area; " +
     s"number of rooms: $numberOfRooms; furnish: $furnish; $checkingNulls; $house}"
   }
 
