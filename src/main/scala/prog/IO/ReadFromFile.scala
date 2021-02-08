@@ -3,14 +3,13 @@ package prog.IO
 import prog.Main.collection
 import prog.Model.{FlatReader, IdGenerator}
 
-import java.io.{BufferedInputStream, File, FileInputStream}
-import scala.xml
-import scala.xml.NodeSeq.Empty.text
+import java.io.File
 import scala.xml.XML
 
 object ReadFromFile {
-  def readXml(fileName : String) = {
+  def readXml(fileName : String): Unit = {
 //    val inputStream = new BufferedInputStream(new FileInputStream(fileName)
+//    to be honest i should use BufferedInputStream, but XML.loadFile much easier to use
     val xml = XML.loadFile(new File(fileName))
     var maxId = -1
     for (flat <- xml \\ "file" \\ "flat") {

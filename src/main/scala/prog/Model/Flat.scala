@@ -11,6 +11,8 @@ import scala.xml.{Elem, Node}
 class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
            creationDate: LocalDate = java.time.LocalDate.now, area: Float = 0, numberOfRooms : Int,
            furnish: Furnish = Furnish.NONE, view: View, transport: Transport = Transport.NONE, house: House)
+//  .format(DateTimeFormatter.ofPattern("dd-MM-YYYY") i can add this to creationDate
+//  for better readability but then it would be String instead of Date
 {
   if (id <= 0) throw new IllegalArgumentException("id must be more than 0")
   if (name == null) throw new IllegalArgumentException("name can't be null")
@@ -23,25 +25,12 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
   if (house == null) throw new IllegalArgumentException("house can't be null")
 
 
-//  TODO: finish toString
   override def toString: String = {
     s"\tFlat {id: $id; name: $name; $coordinates; creation date: $creationDate; area: $area; " +
-    s"number of rooms: $numberOfRooms; furnish: $furnish; $checkingNulls; $house}"
+    s"number of rooms: $numberOfRooms; furnish: $furnish; view: $view; transport: $transport; $house}"
   }
 
   /**
-   * method assistant
-   * to show only not null fields
-   */
-  def checkingNulls(): String = {
-    var result = ""
-    if (view != null) result += "view: " + view
-    if( transport != null) result += "; transport: " + transport
-    result
-  }
-
-  /**
-   *
    * @return xml element that would be written to file
    */
   def toXml: Elem = {
@@ -65,9 +54,15 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
       </house>
     </flat>
   }
+}
 
+/**
+ * parse xml node
+ * @return Flat object
+ */
 //  TODO: add validation for input
-  def fromXml(node : Node) : Flat = {
+object FlatReader {
+  def fromXml(node: Node): Flat = {
     val id = (node \ "id").text.toInt
     val name = (node \ "name").text
     val coordinates = new Coordinates((node \ "coordinates" \ "x").text.toLong, (node \ "coordinates" \ "y").text.toFloat)
@@ -78,7 +73,6 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
     val view = View.withName((node \ "view").text)
     val transport = Transport.withName((node \ "transport").text)
     val house = new House((node \ "house" \ "name").text, (node \ "house" \ "year").text.toInt, (node \ "house" \ "number-of-lifts").text.toInt)
-
 
     new Flat(id, name, coordinates, creationDate, area, numberOfRooms, furnish, view, transport, house)
   }
