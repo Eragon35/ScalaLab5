@@ -26,6 +26,7 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
 
 
   def id_(): Int = id
+  def numberOfRooms_(): Int = numberOfRooms
   def view_(): View = view
   override def toString: String = {
     s"\tFlat {id: $id; name: $name; $coordinates; creation date: $creationDate; area: $area; " +

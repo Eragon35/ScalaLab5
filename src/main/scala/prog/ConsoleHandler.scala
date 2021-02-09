@@ -6,11 +6,11 @@ import Main._
 
 object ConsoleHandler {
   def handler(input: String) {
-//    TODO: split line to command and object
     var line = input
     while (line.contains("  ")) line = line.trim.replaceAll("\\s\\s", " ")
     val command = line.split(" ", 2)
 //    TODO: add history of commands and catch exceptions
+//    TODO: add validation for zero input for some commands
     command(0).trim match {
       case "help" => println(help)
       case "info" => println("\tType of collection is: " + collection.getClass + "\n\t" +
@@ -20,9 +20,8 @@ object ConsoleHandler {
       case "show" =>
         if (collection.isEmpty) println("\tCollection is empty")
         else collection.foreach(f => println(f))
-//        TODO: add validation for zero input
       case "remove_by_id" => collection.removeFirst(f => f.id_() == command(1).toInt) match {
-        case Some(i) => println(s"$i\n\twas deleted")
+        case Some(i) => println(s"\tDelete:\n$i")
         case None => println("\tElement with such id doesn't exist")
       }
       case "clear" =>
@@ -30,8 +29,9 @@ object ConsoleHandler {
         println("\tCollection is cleared")
       case "save" => WriteToFile.writeToFile(filename, collection)
       case "exit" => sys.exit()
-      case "remove_head" => println("\tdelete" + collection.remove(0))
+      case "remove_head" => println("\tDelete:" + collection.remove(0))
 
+      case "count_by_number_of_rooms" => println("\t" + collection.count(f => f.numberOfRooms_() == command(1).toInt))
       case "print_field_descending_view" =>
         if (collection.isEmpty) println("\tCollection is empty, can't show you anything")
         else collection.sortBy(-_.hashCode()).foreach(x => println("\t" + x.view_()))
