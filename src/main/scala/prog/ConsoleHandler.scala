@@ -5,13 +5,13 @@ import Main._
 
 
 object ConsoleHandler {
-  def handler(line: String) {
+  def handler(input: String) {
 //    TODO: split line to command and object
-    val word = """^([\w\-]+)""".r
-    val command: String = line.trim.replaceAll("\\s\\s", " ").split(" ")(0)
-
+    var line = input
+    while (line.contains("  ")) line = line.trim.replaceAll("\\s\\s", " ")
+    val command = line.split(" ", 2)
 //    TODO: add history of commands and catch exceptions
-    command.trim match {
+    command(0).trim match {
       case "help" => println(help)
       case "info" => println("\tType of collection is: " + collection.getClass + "\n\t" +
         "Initialization time is: " + start.toString + "\n\t" +
@@ -20,6 +20,11 @@ object ConsoleHandler {
       case "show" =>
         if (collection.isEmpty) println("\tCollection is empty")
         else collection.foreach(f => println(f))
+//        TODO: add validation for zero input
+      case "remove_by_id" => collection.removeFirst(f => f.id_() == command(1).toInt) match {
+        case Some(i) => println(s"$i\n\twas deleted")
+        case None => println("\tElement with such id doesn't exist")
+      }
       case "clear" =>
         collection.clear()
         println("\tCollection is cleared")
@@ -46,10 +51,10 @@ object ConsoleHandler {
       |    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
       |    exit : завершить программу (без сохранения в файл)
       |    remove_head : вывести первый элемент коллекции и удалить его
-      |    remove_greater {element} : удалить из коллекции все элементы, превышающие заданный(сравниваются хэш-коды)
+      |    remove_greater {element} : удалить из коллекции все элементы, превышающие заданный (сравниваются хэш-коды)
       |    history : вывести последние 10 команд (без их аргументов)
       |    remove_all_by_number_of_rooms numberOfRooms : удалить из коллекции все элементы, значение поля numberOfRooms которого эквивалентно заданному
       |    count_by_number_of_rooms numberOfRooms : вывести количество элементов, значение поля numberOfRooms которых равно заданному
-      |    print_field_descending_view : вывести значения поля view всех элементов в порядке убывания""".stripMargin
+      |    print_field_descending_view : вывести значения поля view всех элементов в порядке убывания (убывания хэш-кодов)""".stripMargin
 
 }

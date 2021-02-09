@@ -1,7 +1,7 @@
 package prog
 
-import prog.IO.{ReadFromFile, WriteToFile}
-import prog.Model.{Coordinates, Flat, Furnish, House, Transport, View}
+import prog.IO.ReadFromFile
+import prog.Model.Flat
 
 import java.util.{Calendar, Date}
 import scala.collection.mutable
@@ -16,7 +16,7 @@ object Main extends App {
   val filename = args(0)
   val collection = mutable.ArrayDeque[Flat]()
   ReadFromFile.readXml(filename)
-  
+
   while (true) {
     Thread.sleep(50)
     print("Type your command: ")

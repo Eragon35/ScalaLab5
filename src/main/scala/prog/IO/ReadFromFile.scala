@@ -8,8 +8,7 @@ import scala.xml.XML
 
 object ReadFromFile {
   def readXml(fileName : String): Unit = {
-//    val inputStream = new BufferedInputStream(new FileInputStream(fileName)
-//    to be honest i should use BufferedInputStream, but XML.loadFile much easier to use
+//    to be honest i should use BufferedInputStream(new FileInputStream(fileName), but XML.loadFile much easier to use %)
     val xml = XML.loadFile(new File(fileName))
     var maxId = -1
     for (flat <- xml \\ "file" \\ "flat") {
