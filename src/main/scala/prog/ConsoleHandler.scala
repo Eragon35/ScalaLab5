@@ -31,6 +31,10 @@ object ConsoleHandler {
       case "exit" => sys.exit()
       case "remove_head" => println("\tDelete:" + collection.remove(0))
 
+      case "remove_all_by_number_of_rooms" =>
+        val size = collection.size
+        collection.removeAll(f => f.numberOfRooms_() == command(1).toInt)
+        println("\tDelete " + (size-collection.size) + " elements")
       case "count_by_number_of_rooms" => println("\t" + collection.count(f => f.numberOfRooms_() == command(1).toInt))
       case "print_field_descending_view" =>
         if (collection.isEmpty) println("\tCollection is empty, can't show you anything")
