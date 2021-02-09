@@ -23,5 +23,6 @@ object Main extends App {
     val command: String = StdIn.readLine()
     //    TODO: finish handle for all available commands
     ConsoleHandler.handler(command)
+    println()
   }
 }

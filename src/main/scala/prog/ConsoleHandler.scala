@@ -1,16 +1,19 @@
 package prog
 
-import prog.IO.WriteToFile
+import prog.IO.{ReadFromFile, WriteToFile}
 import Main._
+
+import scala.collection.mutable
 
 
 object ConsoleHandler {
+  val history = new mutable.Queue[String]
   def handler(input: String) {
     var line = input
     while (line.contains("  ")) line = line.trim.replaceAll("\\s\\s", " ")
     val command = line.split(" ", 2)
-//    TODO: add history of commands and catch exceptions
-//    TODO: add validation for zero input for some commands
+//    TODO: catch exceptions
+//    TODO: add validation for right argument input
     command(0).trim match {
       case "help" => println(help)
       case "info" => println("\tType of collection is: " + collection.getClass + "\n\t" +
@@ -28,19 +31,20 @@ object ConsoleHandler {
         collection.clear()
         println("\tCollection is cleared")
       case "save" => WriteToFile.writeToFile(filename, collection)
+      case "execute_script" => ReadFromFile.readCommands(command(1))
       case "exit" => sys.exit()
       case "remove_head" => println("\tDelete:" + collection.remove(0))
 
-      case "remove_all_by_number_of_rooms" =>
-        val size = collection.size
-        collection.removeAll(f => f.numberOfRooms_() == command(1).toInt)
-        println("\tDelete " + (size-collection.size) + " elements")
+      case "history" => history.foreach(line => println(s"\t$line"))
+      case "remove_all_by_number_of_rooms" => println("\tDelete " + collection.removeAll(f => f.numberOfRooms_() == command(1).toInt).size + " elements")
       case "count_by_number_of_rooms" => println("\t" + collection.count(f => f.numberOfRooms_() == command(1).toInt))
       case "print_field_descending_view" =>
         if (collection.isEmpty) println("\tCollection is empty, can't show you anything")
         else collection.sortBy(-_.hashCode()).foreach(x => println("\t" + x.view_()))
-      case _ => Console.err.println("\tYou write wrong command, type 'help' to get list of commands")
+      case _ => println("\tYou write wrong command, type 'help' to get list of commands") //Console.err.
     }
+    history += command(0)
+    if (history.size > 10) history.remove(0)
   }
 
   private val help: String =
