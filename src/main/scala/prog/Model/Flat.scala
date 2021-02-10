@@ -7,23 +7,18 @@ import prog.Model.View.View
 import java.time.LocalDate
 import scala.xml.{Elem, Node}
 
-// TODO: refactor area default value
 class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
-           creationDate: LocalDate = java.time.LocalDate.now, area: Float = 0, numberOfRooms : Int,
-           furnish: Furnish = Furnish.NONE, view: View, transport: Transport = Transport.NONE, house: House)
-//  .format(DateTimeFormatter.ofPattern("dd-MM-YYYY") i can add this to creationDate
-//  for better readability but then it would be String instead of Date
-{
+           creationDate: LocalDate = java.time.LocalDate.now, area: Float, numberOfRooms : Int,
+           furnish: Furnish = Furnish.NONE, view: View, transport: Transport = Transport.NONE, house: House) {
   if (id <= 0) throw new IllegalArgumentException("id must be more than 0")
   if (name == null) throw new IllegalArgumentException("name can't be null")
   if (name.isEmpty) throw new IllegalArgumentException("name must be longer than 0")
   if (coordinates == null) throw new IllegalArgumentException("coordinates can't be null")
   if (creationDate == null) throw new IllegalArgumentException("creationDate can't be null")
-//  if (area <= 0) throw new IllegalArgumentException("area must be more than 0")
+  if (area <= 0) throw new IllegalArgumentException("area must be more than 0")
   if (numberOfRooms <= 0) throw new IllegalArgumentException("numberOfRooms must be more than 0")
   if (furnish == null) throw new IllegalArgumentException("furnish can't be null")
   if (house == null) throw new IllegalArgumentException("house can't be null")
-
 
   def id_(): Int = id
   def numberOfRooms_(): Int = numberOfRooms
