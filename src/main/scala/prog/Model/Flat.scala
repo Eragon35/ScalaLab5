@@ -1,5 +1,6 @@
 package prog.Model
 
+import prog.Main.collection
 import prog.Model.Furnish.Furnish
 import prog.Model.Transport.Transport
 import prog.Model.View.View
@@ -60,18 +61,22 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
  */
 //  TODO: add validation for input
 object FlatReader {
-  def fromXml(node: Node): Flat = {
-    val id = (node \ "id").text.toInt
-    val name = (node \ "name").text
-    val coordinates = new Coordinates((node \ "coordinates" \ "x").text.toLong, (node \ "coordinates" \ "y").text.toFloat)
-    val creationDate = LocalDate.parse((node \ "creation-date").text)
-    val area = (node \ "area").text.toFloat
-    val numberOfRooms = (node \ "number-of-rooms").text.toInt
-    val furnish = Furnish.withName((node \ "furnish").text)
-    val view = View.withName((node \ "view").text)
-    val transport = Transport.withName((node \ "transport").text)
-    val house = new House((node \ "house" \ "name").text, (node \ "house" \ "year").text.toInt, (node \ "house" \ "number-of-lifts").text.toInt)
+  def fromXml(node: Node): Unit = {
+    try {
+      val id = (node \ "id").text.toInt
+      val name = (node \ "name").text
+      val coordinates = new Coordinates((node \ "coordinates" \ "x").text.toLong, (node \ "coordinates" \ "y").text.toFloat)
+      val creationDate = LocalDate.parse((node \ "creation-date").text)
+      val area = (node \ "area").text.toFloat
+      val numberOfRooms = (node \ "number-of-rooms").text.toInt
+      val furnish = Furnish.withName((node \ "furnish").text)
+      val view = View.withName((node \ "view").text)
+      val transport = Transport.withName((node \ "transport").text)
+      val house = new House((node \ "house" \ "name").text, (node \ "house" \ "year").text.toInt, (node \ "house" \ "number-of-lifts").text.toInt)
 
-    new Flat(id, name, coordinates, creationDate, area, numberOfRooms, furnish, view, transport, house)
+      collection.addOne(new Flat(id, name, coordinates, creationDate, area, numberOfRooms, furnish, view, transport, house))
+    } catch {
+      case _: Throwable => Console.err.println("\tProblem with parsing Flat from xml")
+    }
   }
 }

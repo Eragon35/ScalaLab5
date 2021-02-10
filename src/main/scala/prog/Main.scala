@@ -8,10 +8,9 @@ import scala.collection.mutable
 import scala.io.StdIn
 
 object Main extends App {
-  println("Beginning of lab 5 variant 1486, scala edition\n")
+  println("Beginning of lab 5 variant 1486, scala edition")
 
-  FileChecker.check(args(0))
-
+  if (FileChecker.check(args(0))) sys.exit()
   val start: Date = Calendar.getInstance().getTime
   val filename = args(0)
   val collection = mutable.ArrayDeque[Flat]()
@@ -19,10 +18,8 @@ object Main extends App {
 
   while (true) {
     Thread.sleep(50)
-    print("Type your command: ")
+    print("\nType your command: ")
     val command: String = StdIn.readLine()
-    //    TODO: finish handle for all available commands
     ConsoleHandler.handler(command)
-    println()
   }
 }

@@ -44,7 +44,7 @@ object ConsoleHandler {
       case "print_field_descending_view" =>
         if (collection.isEmpty) println("\tCollection is empty, can't show you anything")
         else collection.sortBy(-_.hashCode()).foreach(x => println("\t" + x.view_()))
-      case _ => println("\tYou write wrong command, type 'help' to get list of commands") //Console.err.
+      case _ => Console.err.println("\tYou write wrong command, type 'help' to get list of commands") //
     }
     history += command(0)
     if (history.size > 10) history.remove(0)

@@ -1,23 +1,33 @@
 package prog
 
-import prog.Main.args
-
 import java.nio.file.{Files, Path, Paths}
 
 object FileChecker {
-  def check(name: String): Unit ={
+  /**
+   *
+   * @param name name of file
+   * @param full if you need check all
+   *             if it false, ability to write to the file wouldn't be check
+   * @return true if having some problems otherwise false
+   */
+  def check(name: String, full: Boolean = true): Boolean = {
     if (name.isEmpty) {
-      println("dude, i need a file's name")
-      sys.exit()
+      Console.err.println("\tdude, i need a file's name")
+      return true
     }
     val path: Path = Paths.get(name)
     if (!Files.exists(path)){
-      println("dude, file doesn't exist")
-      sys.exit()
+      Console.err.println("\tdude, file doesn't exist")
+      return true
     }
     if(!Files.isReadable(path) || (!Files.isWritable(path))) {
-      println("dude, i can't access the file")
-      sys.exit()
+      Console.err.println("\tdude, i can't read the file")
+      return true
     }
+    if (full && (!Files.isWritable(path))){
+      Console.err.println("\tdude, i haven't ability to write to the file")
+      return true
+    }
+    false
   }
 }
