@@ -15,8 +15,7 @@ object WriteToFile {
       streamWriter.close()
       println("Data was written to " + filename)
     } catch {
-      case _: Throwable => Console.err.println("\tProblem with writing collection to file")
-        println("\t" + _)
+      case e: Throwable => Console.err.println("\tProblem with writing collection to file\n\t" + e.getMessage)
     }
   }
 }

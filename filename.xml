@@ -1,22 +1,22 @@
 <file>
-<flat>
-      <id>1</id>
-      <name>petrovich</name>
-      <coordinates>
-        <x>12</x>
-        <y>35.0</y>
-      </coordinates>
-      <creation-date>2021-02-08</creation-date>
-      <area>30</area>  <!-- can be null-->
-      <number-of-rooms>1</number-of-rooms>
-      <furnish>BAD</furnish>  <!-- can be null-->
-      <view>TERRIBLE</view>
-      <transport>LITTLE</transport>  <!-- can be null-->
-      <house>
-        <name>pobedi 76</name>
-        <year>1956</year>
-        <number-of-lifts>5</number-of-lifts>
-      </house>
+    <flat>
+        <id>1</id>
+        <name>petrovich</name>
+        <coordinates>
+            <x>12</x>
+            <y>35.0</y>
+        </coordinates>
+        <creation-date>2021-02-08</creation-date>
+        <area>30</area>  <!-- can be null-->
+        <number-of-rooms>1</number-of-rooms>
+        <furnish>BAD</furnish>  <!-- can be null-->
+        <view>TERRIBLE</view>
+        <transport>LITTLE</transport>  <!-- can be null-->
+        <house>
+            <name>pobedi 76</name>
+            <year>1956</year>
+            <number-of-lifts>5</number-of-lifts>
+        </house>
     </flat>
     <flat>
         <id>2</id>

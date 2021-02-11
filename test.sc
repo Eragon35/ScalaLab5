@@ -19,6 +19,9 @@ if (opt1 != None) opt1.get
 (opt2 != None)
 
 
+"   1   ".trim.toInt
+
+
 
 
 

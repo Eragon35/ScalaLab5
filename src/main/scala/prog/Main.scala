@@ -14,7 +14,7 @@ object Main extends App {
   val start: Date = Calendar.getInstance().getTime
   val filename = args(0)
   val collection = mutable.ArrayDeque[Flat]()
-  ReadFromFile.readXml(filename)
+  ReadFromFile.readXml()
 
   while (true) {
     Thread.sleep(50)

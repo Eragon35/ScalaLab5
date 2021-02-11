@@ -12,6 +12,7 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
            creationDate: LocalDate = java.time.LocalDate.now, area: Float, numberOfRooms : Int,
            furnish: Furnish = Furnish.NONE, view: View, transport: Transport = Transport.NONE, house: House) {
   if (id <= 0) throw new IllegalArgumentException("id must be more than 0")
+  if (collection.filter(f => f.id_() == id).size != 0) throw new IllegalArgumentException("id already in use, can't create this flat")
   if (name == null) throw new IllegalArgumentException("name can't be null")
   if (name.isEmpty) throw new IllegalArgumentException("name must be longer than 0")
   if (coordinates == null) throw new IllegalArgumentException("coordinates can't be null")
@@ -30,7 +31,7 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
   }
 
   /**
-   * @return xml element that would be written to file
+   * @return xml Node from Flat object that would be written to file
    */
   def toXml: Elem = {
     <flat>
@@ -60,7 +61,6 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
  * @return Option[Flat] object if all is ok
  *         else return None
  */
-//  TODO: add validation for input
 object FlatReader {
   def fromXml(node: Node): Option[Flat] = {
     try {
@@ -98,8 +98,7 @@ object FlatReader {
       new Flat(name = name, coordinates = new Coordinates(x.toLong, y.toFloat), creationDate = LocalDate.parse(date), area = area.toFloat,
         numberOfRooms = rooms.toInt, view = View.withName(view), house = new House(houseName, year.toInt, floors.toInt))
 
-    //      TODO: rework to smth normal
-    case _ => throw new IllegalArgumentException("\tYou write wrong command, type 'help' to get list of commands")
+    case _ => throw new IllegalArgumentException("can't parse Flat from you input string")
 
   }
 }

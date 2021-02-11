@@ -12,23 +12,15 @@ object ReadFromFile {
    * get nodes from filename
    * try to parse it to flat by calling FlatReader.fromXml
    * if it returns flat then add it to the collection
-   * and also counting max id to set it to IdGenerator
    */
   def readXml(): Unit = {
     try {
       val xml = XML.loadFile(new File(filename))
-      var maxId = -1
       for (flat <- xml \\ "file" \\ "flat") {
-        val parsedFlat = FlatReader.fromXml(flat)
-        if (parsedFlat.isDefined) {
-          collection.addOne(parsedFlat.get)
-          if (parsedFlat.get.id_() > maxId) maxId = parsedFlat.get.id_()
-        }
+        if (FlatReader.fromXml(flat).isDefined) collection.addOne(FlatReader.fromXml(flat).get)
       }
-      IdGenerator.setId(maxId)
     } catch {
-      case _: Throwable => Console.err.println("\tProblem with parsing xml file")
-        println("\t" + _)
+      case e: Throwable => Console.err.println("\tProblem with parsing xml file\n\t" + e.getMessage)
     }
   }
 
@@ -46,8 +38,7 @@ object ReadFromFile {
         ConsoleHandler.handler(line)
       }
     } catch {
-      case _: Throwable => Console.err.println("\tProblem with parsing file to commands")
-        println("\t" + _)
+      case e: Throwable => Console.err.println("\tProblem with parsing file to commands\n\t" + e.getMessage)
     }
   }
 }

@@ -10,43 +10,53 @@ import scala.collection.mutable
 object ConsoleHandler {
   val history = new mutable.Queue[String]
   def handler(input: String) {
-    var line = input
-    while (line.contains("  ")) line = line.trim.replaceAll("\\s\\s", " ")
-    val command = line.split(" ", 2)
-//    TODO: catch exceptions
-//    TODO: add validation for right argument input
-    command(0).trim match {
-      case "help" => println(help)
-      case "info" => println("\tType of collection is: " + collection.getClass + "\n\t" +
-        "Initialization time is: " + start.toString + "\n\t" +
-        "Collection size is: " + collection.size + "\n\t" +
-        "Collection hash-code is: " + collection.hashCode())
-      case "show" =>
-        if (collection.isEmpty) println("\tCollection is empty")
-        else collection.foreach(f => println(f))
-      case "add" => collection.addOne(FlatReader.stringToFlat(command(1)))
-      case "update id" => collection.update(FlatReader.stringToFlat(command(1)).id_(), FlatReader.stringToFlat(command(1)))
-      case "remove_by_id" => collection.removeFirst(f => f.id_() == command(1).toInt) match {
-        case Some(i) => println(s"\tDelete:\n$i")
-        case None => println("\tElement with such id doesn't exist") }
-      case "clear" =>
-        collection.clear()
-        println("\tCollection is cleared")
-      case "save" => WriteToFile.writeToFile()
-      case "execute_script" => ReadFromFile.readCommands(command(1))
-      case "exit" => sys.exit()
-      case "remove_head" => println("\tDelete:" + collection.remove(0))
-      case "remove_greater" => println("\tDelete " + collection.removeAll(f => f.hashCode() > FlatReader.stringToFlat(command(1)).hashCode()).size + " elements")
-      case "history" => history.foreach(line => println(s"\t$line"))
-      case "remove_all_by_number_of_rooms" => println("\tDelete " + collection.removeAll(f => f.numberOfRooms_() == command(1).toInt).size + " elements")
-      case "count_by_number_of_rooms" => println("\t" + collection.count(f => f.numberOfRooms_() == command(1).toInt))
-      case "print_field_descending_view" =>
-        if (collection.isEmpty) println("\tCollection is empty, can't show you anything")
-        else collection.sortBy(-_.hashCode()).foreach(x => println("\t" + x.view_()))
-      case _ => Console.err.println("\tYou write wrong command, type 'help' to get list of commands") //
+    try {
+      var line = input
+      while (line.contains("  ")) line = line.trim.replaceAll("  ", " ")
+      val command = line.split(" ", 2)
+      //    TODO: catch exceptions
+      //    TODO: add validation for right argument input
+      command(0).trim match {
+        case "help" => println(help)
+        case "info" => println("\tType of collection is: " + collection.getClass + "\n\t" +
+          "Initialization time is: " + start.toString + "\n\t" +
+          "Collection size is: " + collection.size + "\n\t" +
+          "Collection hash-code is: " + collection.hashCode())
+        case "show" =>
+          if (collection.isEmpty) println("\tCollection is empty")
+          else collection.foreach(f => println(f))
+        case "add" => collection.addOne(FlatReader.stringToFlat(command(1).trim))
+
+//          TODO: split Flat and id from command(1)
+        case "update" => val id = command(1).split(" ")(0).toInt
+          collection.update(FlatReader.stringToFlat(command(1).trim).id_(), FlatReader.stringToFlat(command(1).trim))
+
+        case "remove_by_id" => collection.removeFirst(f => f.id_() == command(1).trim.toInt) match {
+          case Some(i) => println(s"\tDelete:\n$i")
+          case None => println("\tElement with such id doesn't exist")
+        }
+        case "clear" =>
+          collection.clear()
+          println("\tCollection is cleared")
+        case "save" => WriteToFile.writeToFile()
+        case "execute_script" => ReadFromFile.readCommands(command(1).trim)
+        case "exit" => sys.exit()
+        case "remove_head" => println("\tDelete:" + collection.remove(0))
+        case "remove_greater" => println("\tDelete " + collection.removeAll(f => f.hashCode() > FlatReader.stringToFlat(command(1).trim).hashCode()).size + " elements")
+        case "history" => history.foreach(line => println(s"\t$line"))
+        case "remove_all_by_number_of_rooms" => println("\tDelete " + collection.removeAll(f => f.numberOfRooms_() == command(1).trim.toInt).size + " elements")
+        case "count_by_number_of_rooms" => println("\t" + collection.count(f => f.numberOfRooms_() == command(1).trim.toInt))
+        case "print_field_descending_view" =>
+          if (collection.isEmpty) println("\tCollection is empty, can't show you anything")
+          else collection.sortBy(-_.hashCode()).foreach(x => println("\t" + x.view_()))
+        case _ => println("\tYou write wrong command, type 'help' to get list of commands") //Console.err.
+      }
+      history += command(0)
+      if (history.size > 10) history.remove(0)
+    } catch {
+      case e : Throwable => Console.err.println("\tProblem execution the command:\n\t" + e.getMessage)
+        e.printStackTrace()
     }
-    history += command(0)
-    if (history.size > 10) history.remove(0)
   }
 
   private val help: String =

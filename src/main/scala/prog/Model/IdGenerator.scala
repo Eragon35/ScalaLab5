@@ -1,11 +1,14 @@
 package prog.Model
 
+import prog.Main.collection
+
 object IdGenerator {
   private var id = 0
-
-  def setId (id : Int): Unit = { this.id = id }
   def getId: Int = {
-    id = id +1
-    id
+    collection.foreach(f => {
+      if (f.id_() > id)
+        id = f.id_()
+    })
+    id +1
   }
 }
