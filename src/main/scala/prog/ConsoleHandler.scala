@@ -33,7 +33,7 @@ object ConsoleHandler {
       case "clear" =>
         collection.clear()
         println("\tCollection is cleared")
-      case "save" => WriteToFile.writeToFile(filename, collection)
+      case "save" => WriteToFile.writeToFile()
       case "execute_script" => ReadFromFile.readCommands(command(1))
       case "exit" => sys.exit()
       case "remove_head" => println("\tDelete:" + collection.remove(0))
