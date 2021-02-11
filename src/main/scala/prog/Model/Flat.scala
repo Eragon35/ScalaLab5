@@ -79,4 +79,25 @@ object FlatReader {
       case _: Throwable => Console.err.println("\tProblem with parsing Flat from xml")
     }
   }
+  def stringToFlat(line: String): Flat = line match {
+    case s"Flat {name: $name; Coordinates ($x, $y); creation date: $date; area: $area; number of rooms: $rooms; furnish: $furnish; view: $view; transport: $transport; House: $houseName (year: $year, number of floors: $floors)}" =>
+      new Flat(name = name, coordinates = new Coordinates(x.toLong, y.toFloat), creationDate = LocalDate.parse(date), area = area.toFloat,
+        numberOfRooms = rooms.toInt, furnish = Furnish.withName(furnish), view = View.withName(view), transport = Transport.withName(transport), house = new House(houseName, year.toInt, floors.toInt))
+
+    case s"Flat {name: $name; Coordinates ($x, $y); creation date: $date; area: $area; number of rooms: $rooms; furnish: $furnish; view: $view; House: $houseName (year: $year, number of floors: $floors)}" =>
+      new Flat(name = name, coordinates = new Coordinates(x.toLong, y.toFloat), creationDate = LocalDate.parse(date), area = area.toFloat,
+        numberOfRooms = rooms.toInt, furnish = Furnish.withName(furnish), view = View.withName(view), house = new House(houseName, year.toInt, floors.toInt))
+
+    case s"Flat {name: $name; Coordinates ($x, $y); creation date: $date; area: $area; number of rooms: $rooms; view: $view; transport: $transport; House: $houseName (year: $year, number of floors: $floors)}" =>
+      new Flat(name = name, coordinates = new Coordinates(x.toLong, y.toFloat), creationDate = LocalDate.parse(date), area = area.toFloat, numberOfRooms = rooms.toInt,
+        view = View.withName(view), transport = Transport.withName(transport), house = new House(houseName, year.toInt, floors.toInt))
+
+    case s"Flat {name: $name; Coordinates ($x, $y); creation date: $date; area: $area; number of rooms: $rooms; view: $view; House: $houseName (year: $year, number of floors: $floors)}" =>
+      new Flat(name = name, coordinates = new Coordinates(x.toLong, y.toFloat), creationDate = LocalDate.parse(date), area = area.toFloat,
+        numberOfRooms = rooms.toInt, view = View.withName(view), house = new House(houseName, year.toInt, floors.toInt))
+
+    //      TODO: rework to smth normal
+    case _ => throw new IllegalArgumentException("\tYou write wrong command, type 'help' to get list of commands")
+
+  }
 }

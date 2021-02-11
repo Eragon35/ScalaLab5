@@ -2,7 +2,7 @@ package prog
 
 import prog.IO.{ReadFromFile, WriteToFile}
 import Main._
-import prog.Model.{Coordinates, Flat, Furnish, House, Transport, View}
+import prog.Model.{Coordinates, Flat, FlatReader, Furnish, House, Transport, View}
 
 import java.time.LocalDate
 import scala.collection.mutable
@@ -25,8 +25,8 @@ object ConsoleHandler {
       case "show" =>
         if (collection.isEmpty) println("\tCollection is empty")
         else collection.foreach(f => println(f))
-      case "add" => collection.addOne(parseToFlat(command(1)))
-      case "update id" => collection.update(parseToFlat(command(1)).id_(), parseToFlat(command(1)))
+      case "add" => collection.addOne(FlatReader.stringToFlat(command(1)))
+      case "update id" => collection.update(FlatReader.stringToFlat(command(1)).id_(), FlatReader.stringToFlat(command(1)))
       case "remove_by_id" => collection.removeFirst(f => f.id_() == command(1).toInt) match {
         case Some(i) => println(s"\tDelete:\n$i")
         case None => println("\tElement with such id doesn't exist") }
@@ -37,7 +37,7 @@ object ConsoleHandler {
       case "execute_script" => ReadFromFile.readCommands(command(1))
       case "exit" => sys.exit()
       case "remove_head" => println("\tDelete:" + collection.remove(0))
-      case "remove_greater" => println("\tDelete " + collection.removeAll(f => f.hashCode() > parseToFlat(command(1)).hashCode()).size + " elements")
+      case "remove_greater" => println("\tDelete " + collection.removeAll(f => f.hashCode() > FlatReader.stringToFlat(command(1)).hashCode()).size + " elements")
       case "history" => history.foreach(line => println(s"\t$line"))
       case "remove_all_by_number_of_rooms" => println("\tDelete " + collection.removeAll(f => f.numberOfRooms_() == command(1).toInt).size + " elements")
       case "count_by_number_of_rooms" => println("\t" + collection.count(f => f.numberOfRooms_() == command(1).toInt))
@@ -68,26 +68,4 @@ object ConsoleHandler {
       |    count_by_number_of_rooms numberOfRooms : вывести количество элементов, значение поля numberOfRooms которых равно заданному
       |    print_field_descending_view : вывести значения поля view всех элементов в порядке убывания (убывания хэш-кодов)""".stripMargin
 
-
-  def parseToFlat(line: String): Flat = line match {
-    case s"Flat {name: $name; Coordinates ($x, $y); creation date: $date; area: $area; number of rooms: $rooms; furnish: $furnish; view: $view; transport: $transport; House: $houseName (year: $year, number of floors: $floors)}" =>
-      new Flat(name = name, coordinates = new Coordinates(x.toLong, y.toFloat), creationDate = LocalDate.parse(date), area = area.toFloat,
-        numberOfRooms = rooms.toInt, furnish = Furnish.withName(furnish), view = View.withName(view), transport = Transport.withName(transport), house = new House(houseName, year.toInt, floors.toInt))
-
-    case s"Flat {name: $name; Coordinates ($x, $y); creation date: $date; area: $area; number of rooms: $rooms; furnish: $furnish; view: $view; House: $houseName (year: $year, number of floors: $floors)}" =>
-      new Flat(name = name, coordinates = new Coordinates(x.toLong, y.toFloat), creationDate = LocalDate.parse(date), area = area.toFloat,
-        numberOfRooms = rooms.toInt, furnish = Furnish.withName(furnish), view = View.withName(view), house = new House(houseName, year.toInt, floors.toInt))
-
-    case s"Flat {name: $name; Coordinates ($x, $y); creation date: $date; area: $area; number of rooms: $rooms; view: $view; transport: $transport; House: $houseName (year: $year, number of floors: $floors)}" =>
-      new Flat(name = name, coordinates = new Coordinates(x.toLong, y.toFloat), creationDate = LocalDate.parse(date), area = area.toFloat, numberOfRooms = rooms.toInt,
-        view = View.withName(view), transport = Transport.withName(transport), house = new House(houseName, year.toInt, floors.toInt))
-
-    case s"Flat {name: $name; Coordinates ($x, $y); creation date: $date; area: $area; number of rooms: $rooms; view: $view; House: $houseName (year: $year, number of floors: $floors)}" =>
-      new Flat(name = name, coordinates = new Coordinates(x.toLong, y.toFloat), creationDate = LocalDate.parse(date), area = area.toFloat,
-        numberOfRooms = rooms.toInt, view = View.withName(view), house = new House(houseName, year.toInt, floors.toInt))
-
-//      TODO: rework to smth normal
-    case _ => throw new IllegalArgumentException("\tYou write wrong command, type 'help' to get list of commands")
-
-  }
 }
