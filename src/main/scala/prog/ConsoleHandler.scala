@@ -2,9 +2,8 @@ package prog
 
 import prog.IO.{ReadFromFile, WriteToFile}
 import Main._
-import prog.Model.{Coordinates, Flat, FlatReader, Furnish, House, Transport, View}
+import prog.Model.FlatReader
 
-import java.time.LocalDate
 import scala.collection.mutable
 
 

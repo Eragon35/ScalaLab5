@@ -12,6 +12,13 @@ val history = new mutable.Queue[String]
 history += "lox"
 history += "pidor"
 
+val opt1 = Option(new String("hello"))
+val opt2 = Option(null)
+
+if (opt1 != None) opt1.get
+(opt2 != None)
+
+
 
 
 

@@ -19,5 +19,4 @@ object WriteToFile {
         println("\t" + _)
     }
   }
-
 }

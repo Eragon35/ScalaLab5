@@ -8,13 +8,22 @@ import java.io.{BufferedInputStream, DataInputStream, File, FileInputStream}
 import scala.xml.XML
 
 object ReadFromFile {
+  /**
+   * get nodes from filename
+   * try to parse it to flat by calling FlatReader.fromXml
+   * if it returns flat then add it to the collection
+   * and also counting max id to set it to IdGenerator
+   */
   def readXml(): Unit = {
     try {
       val xml = XML.loadFile(new File(filename))
       var maxId = -1
       for (flat <- xml \\ "file" \\ "flat") {
-        FlatReader.fromXml(flat)
-        if ((flat \ "id").text.toInt > maxId) maxId = (flat \ "id").text.toInt
+        val parsedFlat = FlatReader.fromXml(flat)
+        if (parsedFlat.isDefined) {
+          collection.addOne(parsedFlat.get)
+          if (parsedFlat.get.id_() > maxId) maxId = parsedFlat.get.id_()
+        }
       }
       IdGenerator.setId(maxId)
     } catch {
@@ -23,6 +32,10 @@ object ReadFromFile {
     }
   }
 
+  /**
+   * @param fileName
+   * just read lines from fileName and send it to ConsoleHandler
+   */
   def readCommands (fileName: String): Unit = {
     if (FileChecker.check(fileName, full = false)) return
     try {
@@ -37,5 +50,4 @@ object ReadFromFile {
         println("\t" + _)
     }
   }
-
 }

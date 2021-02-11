@@ -57,11 +57,12 @@ class Flat(id: Int = IdGenerator.getId, name: String, coordinates: Coordinates,
 
 /**
  * parse xml node
- * @return Flat object
+ * @return Option[Flat] object if all is ok
+ *         else return None
  */
 //  TODO: add validation for input
 object FlatReader {
-  def fromXml(node: Node): Unit = {
+  def fromXml(node: Node): Option[Flat] = {
     try {
       val id = (node \ "id").text.toInt
       val name = (node \ "name").text
@@ -74,9 +75,10 @@ object FlatReader {
       val transport = Transport.withName((node \ "transport").text)
       val house = new House((node \ "house" \ "name").text, (node \ "house" \ "year").text.toInt, (node \ "house" \ "number-of-lifts").text.toInt)
 
-      collection.addOne(new Flat(id, name, coordinates, creationDate, area, numberOfRooms, furnish, view, transport, house))
+      Option(new Flat(id, name, coordinates, creationDate, area, numberOfRooms, furnish, view, transport, house))
     } catch {
       case _: Throwable => Console.err.println("\tProblem with parsing Flat from xml")
+        None
     }
   }
   def stringToFlat(line: String): Flat = line match {
