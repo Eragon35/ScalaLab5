@@ -19,7 +19,6 @@ object Main extends App {
   while (true) {
     Thread.sleep(50)
     print("\nType your command: ")
-    val command: String = StdIn.readLine()
-    ConsoleHandler.handler(command)
+    ConsoleHandler.handler(StdIn.readLine())
   }
 }

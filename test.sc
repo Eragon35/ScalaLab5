@@ -9,8 +9,6 @@ while (line.contains("  ")) line = line.trim.replaceAll("\\s\\s", " ")
 line.split(" ", 2)
 
 val history = new mutable.Queue[String]
-history += "lox"
-history += "pidor"
 
 val opt1 = Option(new String("hello"))
 val opt2 = Option(null)
@@ -21,6 +19,7 @@ if (opt1 != None) opt1.get
 
 "   1   ".trim.toInt
 
+"petuh chmo urod".split(" ", 2)
 
 
 

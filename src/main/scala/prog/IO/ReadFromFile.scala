@@ -1,7 +1,7 @@
 package prog.IO
 
 import prog.{ConsoleHandler, FileChecker}
-import prog.Model.{FlatReader, IdGenerator}
+import prog.Model.FlatReader
 import prog.Main._
 
 import java.io.{BufferedInputStream, DataInputStream, File, FileInputStream}
@@ -17,7 +17,9 @@ object ReadFromFile {
     try {
       val xml = XML.loadFile(new File(filename))
       for (flat <- xml \\ "file" \\ "flat") {
-        if (FlatReader.fromXml(flat).isDefined) collection.addOne(FlatReader.fromXml(flat).get)
+        FlatReader.fromXml(flat) match {
+          case Some(i) => collection.addOne(i)
+        }
       }
     } catch {
       case e: Throwable => Console.err.println("\tProblem with parsing xml file\n\t" + e.getMessage)

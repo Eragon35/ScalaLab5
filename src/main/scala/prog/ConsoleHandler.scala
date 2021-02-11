@@ -1,8 +1,8 @@
 package prog
 
 import prog.IO.{ReadFromFile, WriteToFile}
-import Main._
-import prog.Model.FlatReader
+import Main.{collection, start}
+import prog.Model.{Flat, FlatReader}
 
 import scala.collection.mutable
 
@@ -12,10 +12,8 @@ object ConsoleHandler {
   def handler(input: String) {
     try {
       var line = input
-      while (line.contains("  ")) line = line.trim.replaceAll("  ", " ")
+      while (line.contains("  ")) line = line.trim.replaceAll("\\s\\s", " ")
       val command = line.split(" ", 2)
-      //    TODO: catch exceptions
-      //    TODO: add validation for right argument input
       command(0).trim match {
         case "help" => println(help)
         case "info" => println("\tType of collection is: " + collection.getClass + "\n\t" +
@@ -26,15 +24,13 @@ object ConsoleHandler {
           if (collection.isEmpty) println("\tCollection is empty")
           else collection.foreach(f => println(f))
         case "add" => collection.addOne(FlatReader.stringToFlat(command(1).trim))
-
-//          TODO: split Flat and id from command(1)
-        case "update" => val id = command(1).split(" ")(0).toInt
-          collection.update(FlatReader.stringToFlat(command(1).trim).id_(), FlatReader.stringToFlat(command(1).trim))
-
+        case "update" => val updateCommand = command(1).trim.split(" ", 2)
+          val id: Int = updateCommand(0).trim.toInt
+          val flat: Flat = FlatReader.stringToFlat(updateCommand(1).trim, id)
+          collection.update(collection.indexOf(collection.find(f => f.id_() == id).get), flat)
         case "remove_by_id" => collection.removeFirst(f => f.id_() == command(1).trim.toInt) match {
           case Some(i) => println(s"\tDelete:\n$i")
-          case None => println("\tElement with such id doesn't exist")
-        }
+          case None => println("\tElement with such id doesn't exist") }
         case "clear" =>
           collection.clear()
           println("\tCollection is cleared")
@@ -49,13 +45,12 @@ object ConsoleHandler {
         case "print_field_descending_view" =>
           if (collection.isEmpty) println("\tCollection is empty, can't show you anything")
           else collection.sortBy(-_.hashCode()).foreach(x => println("\t" + x.view_()))
-        case _ => println("\tYou write wrong command, type 'help' to get list of commands") //Console.err.
+        case _ => println("\tYou write wrong command, type 'help' to get list of commands")
       }
       history += command(0)
       if (history.size > 10) history.remove(0)
     } catch {
       case e : Throwable => Console.err.println("\tProblem execution the command:\n\t" + e.getMessage)
-        e.printStackTrace()
     }
   }
 
@@ -76,5 +71,4 @@ object ConsoleHandler {
       |    remove_all_by_number_of_rooms numberOfRooms : удалить из коллекции все элементы, значение поля numberOfRooms которого эквивалентно заданному
       |    count_by_number_of_rooms numberOfRooms : вывести количество элементов, значение поля numberOfRooms которых равно заданному
       |    print_field_descending_view : вывести значения поля view всех элементов в порядке убывания (убывания хэш-кодов)""".stripMargin
-
 }

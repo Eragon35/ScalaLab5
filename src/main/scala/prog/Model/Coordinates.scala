@@ -6,10 +6,7 @@ class Coordinates (x: Long, y: Float) {
   if (x <= -702) throw  new IllegalArgumentException("X should be more than -702")
   if (y <= -261) throw  new IllegalArgumentException("Y should be more than -261")
 
-  override def toString: String = {
-    "Coordinates (" + x + ", " + y + ")"
-  }
-
+  override def toString: String = "Coordinates (" + x + ", " + y + ")"
   def x(): Long = x
   def y(): Float = y
 }

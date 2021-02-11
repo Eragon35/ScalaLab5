@@ -1,59 +1,57 @@
 <file>
-    <flat>
-        <id>1</id>
-        <name>petrovich</name>
-        <coordinates>
-            <x>12</x>
-            <y>35.0</y>
-        </coordinates>
-        <creation-date>2021-02-08</creation-date>
-        <area>30</area>  <!-- can be null-->
-        <number-of-rooms>1</number-of-rooms>
-        <furnish>BAD</furnish>  <!-- can be null-->
-        <view>TERRIBLE</view>
-        <transport>LITTLE</transport>  <!-- can be null-->
-        <house>
-            <name>pobedi 76</name>
-            <year>1956</year>
-            <number-of-lifts>5</number-of-lifts>
-        </house>
-    </flat>
-    <flat>
-        <id>2</id>
-        <name>Parent's flat</name>
-        <coordinates>
-            <x>1</x>
-            <y>1.2</y>
-        </coordinates>
-        <creation-date>1997-08-20</creation-date>
-        <area>56</area>  <!-- can be null-->
-        <number-of-rooms>2</number-of-rooms>
-        <furnish>BAD</furnish>  <!-- can be null-->
-        <view>YARD</view>
-        <transport>FEW</transport>  <!-- can be null-->
-        <house>
-            <name>Pobedi 76</name>
-            <year>1958</year>
-            <number-of-lifts>5</number-of-lifts>
-        </house>
-    </flat>
-    <flat>
-        <id>3</id>
-        <name>Kost9s</name>
-        <coordinates>
-            <x>12</x>
-            <y>-20.8</y>
-        </coordinates>
-        <creation-date>1996-12-27</creation-date>
-        <area>46</area>  <!-- can be null-->
-        <number-of-rooms>2</number-of-rooms>
-        <furnish>DESIGNER</furnish>  <!-- can be null-->
-        <view>PARK</view>
-        <transport>NONE</transport>  <!-- can be null-->
-        <house>
-            <name>Domenchikov 76</name>
-            <year>1978</year>
-            <number-of-lifts>5</number-of-lifts>
-        </house>
+<flat>
+      <id>1</id>
+      <name>petrovich</name>
+      <coordinates>
+        <x>12</x>
+        <y>35.0</y>
+      </coordinates>
+      <creation-date>2021-02-08</creation-date>
+      <area>30.0</area>  <!-- can be null-->
+      <number-of-rooms>1</number-of-rooms>
+      <furnish>BAD</furnish>  <!-- can be null-->
+      <view>TERRIBLE</view>
+      <transport>LITTLE</transport>  <!-- can be null-->
+      <house>
+        <name>pobedi 76</name>
+        <year>1956</year>
+        <number-of-lifts>5</number-of-lifts>
+      </house>
+    </flat><flat>
+      <id>2</id>
+      <name>Parent's flat</name>
+      <coordinates>
+        <x>1</x>
+        <y>1.2</y>
+      </coordinates>
+      <creation-date>1997-08-20</creation-date>
+      <area>56.0</area>  <!-- can be null-->
+      <number-of-rooms>2</number-of-rooms>
+      <furnish>BAD</furnish>  <!-- can be null-->
+      <view>YARD</view>
+      <transport>FEW</transport>  <!-- can be null-->
+      <house>
+        <name>Pobedi 76</name>
+        <year>1958</year>
+        <number-of-lifts>5</number-of-lifts>
+      </house>
+    </flat><flat>
+      <id>3</id>
+      <name>Kost9s</name>
+      <coordinates>
+        <x>12</x>
+        <y>-20.8</y>
+      </coordinates>
+      <creation-date>1996-12-27</creation-date>
+      <area>46.0</area>  <!-- can be null-->
+      <number-of-rooms>2</number-of-rooms>
+      <furnish>DESIGNER</furnish>  <!-- can be null-->
+      <view>PARK</view>
+      <transport>NONE</transport>  <!-- can be null-->
+      <house>
+        <name>Domenchikov 76</name>
+        <year>1978</year>
+        <number-of-lifts>5</number-of-lifts>
+      </house>
     </flat>
 </file>

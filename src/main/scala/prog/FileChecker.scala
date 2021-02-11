@@ -5,9 +5,9 @@ import java.nio.file.{Files, Path, Paths}
 object FileChecker {
   /**
    *
-   * @param name name of file
-   * @param full if you need check all
-   *             if it false, ability to write to the file wouldn't be check
+   * @param name name of the file
+   * @param full = true - check all
+   *             false - wouldn't check ability to write to the file
    * @return true if having some problems otherwise false
    */
   def check(name: String, full: Boolean = true): Boolean = {
@@ -20,7 +20,7 @@ object FileChecker {
       Console.err.println("\tdude, file doesn't exist")
       return true
     }
-    if(!Files.isReadable(path) || (!Files.isWritable(path))) {
+    if(!Files.isReadable(path)) {
       Console.err.println("\tdude, i can't read the file")
       return true
     }
